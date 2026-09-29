@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
--- coding: utf-8 --
 import json, os, time, urllib.request, urllib.parse from concurrent.futures import ThreadPoolExecutor, as_completed
 BASES = ["https://api.bybit.com", "https://api.bytick.com"] TIMEFRAMES = os.environ.get("TIMEFRAMES", "1,3,5,15,30,60,240,D").split(",") QUOTE = os.environ.get("QUOTE", "USDT") TF_MS = {"1":60_000,"3":180_000,"5":300_000,"15":900_000,"30":1_800_000, "60":3_600_000,"240":14_400_000,"D":86_400_000} TF_LABEL = {"1":"1m","3":"3m","5":"5m","15":"15m","30":"30m","60":"1H","240":"4H","D":"1D"} STATE_FILE = os.path.join(os.path.dirname(file), "state.json") BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"] CHAT_ID = os.environ["TELEGRAM_CHAT_ID"] WORKERS = int(os.environ.get("WORKERS", "20")) FRESH_WINDOW_MULT = 3
 def http_get_json(url, timeout=10): req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}) with urllib.request.urlopen(req, timeout=timeout) as r: return json.loads(r.read().decode())
